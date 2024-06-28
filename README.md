@@ -14,7 +14,7 @@ The goal is to achieve a program that can:
     -   path to the file containing dinner options to ingest
     -   `--include`: list of tags to include, excluding all others
     -   `--exclude`: list of tags to exclude, including all others
-    -   if both `--include` and `--exclude` options are given, only those options with the tags that are the intersection of the two options will be returned
+    -   if both `--include` and `--exclude` options are given, only those recipes with the tags that are the difference of the two options will be returned
     -   if a given excluded or included tag denotes time (e.g. `30m`) and is prepended by a lesser or greater than operator - `<` or `>` - then the result will include or exclude those recipes whose times are correspondingly greater or lesser than the given tag
         -   additionally, the lesser than or equal to (`<=`) and greater than or equal to (`>=`) operators will also be supported
 

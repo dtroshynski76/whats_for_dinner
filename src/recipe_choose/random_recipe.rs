@@ -9,8 +9,78 @@ pub fn choose_random_recipe<'a>(
         return Err("Empty recipe list");
     }
 
-    // TODO: get random recipe, respecting the include and exclude tags
+    let mut filtered_recipes: Vec<&Recipe> = Vec::new();
 
-    let element = fastrand::usize(..recipes.len());
-    Ok(&recipes[element])
+    match (include_tags.is_empty(), exclude_tags.is_empty()) {
+        (false, false) => filtered_recipes = both_tags_used(recipes, include_tags, exclude_tags),
+        (false, true) => filtered_recipes = only_include_tags(recipes, include_tags),
+        (true, false) => filtered_recipes = only_exclude_tags(recipes, include_tags),
+        (true, true) => {}
+    }
+
+    println!("Filtered recipes: {filtered_recipes:?}");
+
+    if filtered_recipes.is_empty() {
+        return Err("Filtered out all recipes");
+    }
+
+    let element = fastrand::usize(..filtered_recipes.len());
+    Ok(filtered_recipes[element])
+}
+
+fn both_tags_used<'a>(
+    recipes: &'a [Recipe],
+    include_tags: &[String],
+    exclude_tags: &[String],
+) -> Vec<&'a Recipe> {
+    let mut difference: Vec<&String> = Vec::new();
+
+    for x in include_tags {
+        if !exclude_tags.contains(x) {
+            difference.push(x);
+        }
+    }
+
+    recipes
+        .iter()
+        .filter(|r| {
+            for recipe_tag in &r.tags {
+                if difference.contains(&recipe_tag) {
+                    return true;
+                }
+            }
+
+            false
+        })
+        .collect()
+}
+
+fn only_include_tags<'a>(recipes: &'a [Recipe], include_tags: &[String]) -> Vec<&'a Recipe> {
+    recipes
+        .iter()
+        .filter(|r| {
+            for recipe_tag in &r.tags {
+                if include_tags.contains(recipe_tag) {
+                    return true;
+                }
+            }
+
+            false
+        })
+        .collect()
+}
+
+fn only_exclude_tags<'a>(recipes: &'a [Recipe], exclude_tags: &[String]) -> Vec<&'a Recipe> {
+    recipes
+        .iter()
+        .filter(|r| {
+            for recipe_tag in &r.tags {
+                if exclude_tags.contains(recipe_tag) {
+                    return false;
+                }
+            }
+
+            true
+        })
+        .collect()
 }
