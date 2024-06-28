@@ -1,4 +1,4 @@
-use crate::recipe_file::Recipe;
+use crate::recipe_file::file_utils::Recipe;
 
 pub fn choose_random_recipe<'a>(
     recipes: &'a [Recipe],
