@@ -11,7 +11,7 @@ The goal is to achieve a program that can:
 -   then, randomly select an option from that list
 -   output that option to stdout with its name, tags, and recipe
 -   support the CLI options:
-    -   `--file`: path to the file containing dinner options to ingest; defaults to `./dinner_options.txt`
+    -   path to the file containing dinner options to ingest
     -   `--include`: list of tags to include, excluding all others
     -   `--exclude`: list of tags to exclude, including all others
     -   if both `--include` and `--exclude` options are given, only those options with the tags that are the intersection of the two options will be returned
@@ -57,5 +57,5 @@ whats_for_dinner recipes.txt --include new 30m hot
 whats_for_dinner recipes.txt --include new 30m hot --exclude meat carbs
 
 // randomly picks a dinner whose tags include all those less than 30m but not equal to or greater than 30m
-whats_for_dinner /path/to/recipes.txt --include <30m --exclude >=30m
+whats_for_dinner /path/to/recipes.txt --include '<30m' --exclude '>=30m'
 ```
