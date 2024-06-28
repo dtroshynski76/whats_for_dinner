@@ -1,0 +1,17 @@
+[recipe]
+name=Spaghetti & Meatballs
+tags=hot,carbs,30m,dinner
+ingredients=
+1. spaghetti
+2. meatballs
+3. spaghetti sauce
+steps= 1. boil water
+2. put spaghetti in water
+3. while cooking spaghetti, heat sauce with meatballs in it
+4. drain water
+5. put spaghetti on plate, top with sauce + meatballs
+
+[recipe]
+name=Baked
+tags=1h30m,hot,carbs,meat,favorite
+file=/path/to/recipe/baked.txt
