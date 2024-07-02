@@ -15,8 +15,6 @@ The goal is to achieve a program that can:
     -   `--include`: list of tags to include, excluding all others
     -   `--exclude`: list of tags to exclude, including all others
     -   if both `--include` and `--exclude` options are given, only those recipes with the tags that are the difference of the two options will be returned
-    -   if a given excluded or included tag denotes time (e.g. `30m`) and is prepended by a lesser or greater than operator - `<` or `>` - then the result will include or exclude those recipes whose times are correspondingly greater or lesser than the given tag
-        -   additionally, the lesser than or equal to (`<=`) and greater than or equal to (`>=`) operators will also be supported
 
 # Input File Format
 
@@ -55,7 +53,4 @@ whats_for_dinner recipes.txt --include new 30m hot
 
 // randomly picks a recipe from the subset of recipes that have the tags ("new" OR "30m" OR "hot") AND NOT ("meat" OR "carbs")
 whats_for_dinner recipes.txt --include new 30m hot --exclude meat carbs
-
-// randomly picks a dinner whose tags include all those less than 30m but not equal to or greater than 30m
-whats_for_dinner /path/to/recipes.txt --include '<30m' --exclude '>=30m'
 ```

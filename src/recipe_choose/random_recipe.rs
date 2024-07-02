@@ -1,8 +1,8 @@
+use tracing::instrument;
+
 use crate::recipe_file::file_utils::Recipe;
 
-use chrono::DateTime;
-use regex::Regex;
-
+#[instrument]
 pub fn choose_random_recipe<'a>(
     recipes: &'a [Recipe],
     include_tags: &[String],
@@ -31,6 +31,7 @@ pub fn choose_random_recipe<'a>(
     Ok(filtered_recipes[element])
 }
 
+#[instrument]
 fn both_tags_used<'a>(
     recipes: &'a [Recipe],
     include_tags: &[String],
@@ -58,6 +59,7 @@ fn both_tags_used<'a>(
         .collect()
 }
 
+#[instrument]
 fn only_include_tags<'a>(recipes: &'a [Recipe], include_tags: &[String]) -> Vec<&'a Recipe> {
     recipes
         .iter()
@@ -73,6 +75,7 @@ fn only_include_tags<'a>(recipes: &'a [Recipe], include_tags: &[String]) -> Vec<
         .collect()
 }
 
+#[instrument]
 fn only_exclude_tags<'a>(recipes: &'a [Recipe], exclude_tags: &[String]) -> Vec<&'a Recipe> {
     recipes
         .iter()
@@ -86,26 +89,4 @@ fn only_exclude_tags<'a>(recipes: &'a [Recipe], exclude_tags: &[String]) -> Vec<
             true
         })
         .collect()
-}
-
-fn convert_time_tag_to_number(tag: &str) -> Result<i64, &'static str> {
-    let regex = Regex::new(r"^(\d{1,2}h)?\d{2,3}m$");
-
-    if let Ok(regex) = regex {
-        let matched = regex.is_match(tag);
-
-        match matched {
-            true => {}
-            false => return Err("Time tag does not conform to the pattern HH'h'MM'm'"),
-        }
-
-        let time = DateTime::parse_from_str(tag, "%Hh%Mm");
-
-        return match time {
-            Ok(t) => Ok(t.timestamp_millis()),
-            Err(_) => Err("Failed to parse time tag"),
-        };
-    }
-
-    Err("Regex pattern invalid")
 }

@@ -1,3 +1,5 @@
+use tracing::instrument;
+
 const NAME: &str = "name";
 const TAGS: &str = "tags";
 const INGREDIENTS: &str = "ingredients";
@@ -31,6 +33,7 @@ impl Recipe {
     }
 }
 
+#[instrument]
 pub fn parse_recipe_file(recipe_file_contents: String) -> Result<Vec<Recipe>, &'static str> {
     if recipe_file_contents.trim().is_empty() {
         return Err("Empty recipe file contents");
@@ -57,6 +60,7 @@ pub fn parse_recipe_file(recipe_file_contents: String) -> Result<Vec<Recipe>, &'
     Ok(parsed)
 }
 
+#[instrument]
 fn parse_recipe_chunk(chunk: &str) -> Result<Recipe, &'static str> {
     let chunk_lines = chunk.lines();
     let mut result = Recipe::new();
@@ -94,6 +98,7 @@ fn parse_recipe_chunk(chunk: &str) -> Result<Recipe, &'static str> {
     Ok(result)
 }
 
+#[instrument]
 fn update_result(result: &mut Recipe, title: &str, value: &str) -> Result<(), &'static str> {
     let value = String::from(value);
 

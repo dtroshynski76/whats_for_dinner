@@ -5,5 +5,4 @@ edition = "2021"
 
 [dependencies]
 fastrand = "2.1.0"
-chrono = "0.4.38"
-regex = "1.10.5"
+tracing = "0.1.40"
